@@ -183,7 +183,11 @@ Min level: 1
 Max level: 30
 Weight: 8
 
+<<<<<<< HEAD
 Name: L2_Dj_128x64
+=======
+Name: L1_Akira_128x64
+>>>>>>> 858c57fc91d301ed7c2702f5dbc49b5e4f70b0c1
 Min butthurt: 0
 Max butthurt: 14
 Min level: 1
