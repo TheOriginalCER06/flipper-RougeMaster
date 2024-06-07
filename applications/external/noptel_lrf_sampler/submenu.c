@@ -1,12 +1,12 @@
 /***
  * Noptel LRF rangefinder sampler for the Flipper Zero
- * Version: 1.5
+ * Version: 1.9
  *
  * Submenu
 ***/
 
 /*** Includes ***/
-#include "noptel_lrf_sampler.h"
+#include "common.h"
 #include "submenu.h"
 
 /*** Routines ***/
@@ -14,64 +14,78 @@
 /** Handle submenu views switching **/
 void submenu_callback(void* ctx, uint32_t idx) {
     App* app = (App*)ctx;
-    SamplerModel* sampler_model = view_get_model(app->sample_view);
 
     switch(idx) {
     /* Switch to the configuration view */
     case submenu_config:
         view_dispatcher_switch_to_view(app->view_dispatcher, view_config);
-        sampler_model->config.sitem = submenu_config;
+        app->config.sitem = submenu_config;
         FURI_LOG_D(TAG, "Switch to configuration view");
         break;
 
     /* Switch to the sample view */
     case submenu_sample:
         view_dispatcher_switch_to_view(app->view_dispatcher, view_sample);
-        sampler_model->config.sitem = submenu_sample;
+        app->config.sitem = submenu_sample;
         FURI_LOG_D(TAG, "Switch to sample view");
         break;
 
     /* Turn the pointer on and off */
     case submenu_pointeronoff:
-        send_lrf_command(
-            app->lrf_serial_comm_app, sampler_model->pointer_is_on ? pointer_off : pointer_on);
-        FURI_LOG_D(TAG, "Turned the pointer %s", sampler_model->pointer_is_on ? "OFF" : "ON");
-        sampler_model->config.sitem = submenu_pointeronoff;
-        sampler_model->pointer_is_on = !sampler_model->pointer_is_on;
+
+        /* Start the UART at the correct baudrate */
+        start_uart(app->lrf_serial_comm_app, app->config.baudrate);
+
+        /* Send the pointer command */
+        send_lrf_command(app->lrf_serial_comm_app, app->pointer_is_on ? pointer_off : pointer_on);
+
+        /* Stop the UART */
+        stop_uart(app->lrf_serial_comm_app);
+
+        app->config.sitem = submenu_pointeronoff;
+        app->pointer_is_on = !app->pointer_is_on;
+        FURI_LOG_D(TAG, "Turned the pointer %s", app->pointer_is_on ? "OFF" : "ON");
         break;
 
     /* Switch to the LRF info view */
     case submenu_lrfinfo:
         view_dispatcher_switch_to_view(app->view_dispatcher, view_lrfinfo);
-        sampler_model->config.sitem = submenu_lrfinfo;
+        app->config.sitem = submenu_lrfinfo;
         FURI_LOG_D(TAG, "Switch to LRF info view");
         break;
 
     /* Switch to the save diagnostic view */
     case submenu_savediag:
         view_dispatcher_switch_to_view(app->view_dispatcher, view_savediag);
-        sampler_model->config.sitem = submenu_savediag;
+        app->config.sitem = submenu_savediag;
         FURI_LOG_D(TAG, "Switch to save diagnostic view");
         break;
 
     /* Switch to the test laser view */
     case submenu_testlaser:
         view_dispatcher_switch_to_view(app->view_dispatcher, view_testlaser);
-        sampler_model->config.sitem = submenu_testlaser;
+        app->config.sitem = submenu_testlaser;
         FURI_LOG_D(TAG, "Switch to test laser view");
         break;
 
     /* Switch to the test pointer view */
     case submenu_testpointer:
         view_dispatcher_switch_to_view(app->view_dispatcher, view_testpointer);
-        sampler_model->config.sitem = submenu_testpointer;
+        app->config.sitem = submenu_testpointer;
         FURI_LOG_D(TAG, "Switch to test pointer view");
+        break;
+
+    /* Switch to the USB serial passthrough view */
+    case submenu_passthru:
+        view_dispatcher_switch_to_view(app->view_dispatcher, view_passthru);
+        app->config.sitem = submenu_passthru;
+        FURI_LOG_D(TAG, "Switch to USB serial passthrough view");
         break;
 
     /* Switch to the about view */
     case submenu_about:
         view_dispatcher_switch_to_view(app->view_dispatcher, view_about);
-        sampler_model->config.sitem = submenu_about;
+        app->config.sitem = submenu_about;
         FURI_LOG_D(TAG, "Switch to about view");
         break;
 

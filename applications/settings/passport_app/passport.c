@@ -188,6 +188,9 @@ static void render_callback(Canvas* const canvas, void* ctx) {
         case BG_FURI:
             canvas_draw_icon(canvas, 0, 0, &I_passport_Furipass);
             break;
+        case BG_GITS:
+            canvas_draw_icon(canvas, 0, 0, &I_passport_GITS);
+            break;
         case BG_MARIO:
             canvas_draw_icon(canvas, 0, 0, &I_passport_mario);
             break;
@@ -218,14 +221,26 @@ static void render_callback(Canvas* const canvas, void* ctx) {
         switch(passport->settings.image) {
         case PIMG_NONE:
             break;
+        case PIMG_ADPOLICE:
+            canvas_draw_icon(canvas, 11, 2, &I_AD_Police);
+            break;
+        case PIMG_AKKAN:
+            canvas_draw_icon(canvas, 11, 2, &I_Akira_Kaneda);
+            break;
+        case PIMG_AKKEI:
+            canvas_draw_icon(canvas, 11, 2, &I_Akira_Kei);
+            break;
+        case PIMG_AKTET:
+            canvas_draw_icon(canvas, 11, 2, &I_Akira_Tetsuo);
+            break;
         case PIMG_BRIAREOS:
             canvas_draw_icon(canvas, 11, 2, &I_Briareos_Hecatonchires);
             break;
-        case PIMG_COBRA:
-            canvas_draw_icon(canvas, 11, 2, &I_Cobra);
-            break;
         case PIMG_DALI:
             canvas_draw_icon(canvas, 11, 2, &I_Dali_Mask);
+            break;
+        case PIMG_DEDSEC:
+            canvas_draw_icon(canvas, 11, 2, &I_Dedsec_Mask);
             break;
         case PIMG_DEER:
             canvas_draw_icon(canvas, 11, 2, &I_Deer);
@@ -245,6 +260,33 @@ static void render_callback(Canvas* const canvas, void* ctx) {
         case PIMG_FSOCIETY2:
             canvas_draw_icon(canvas, 11, 2, &I_fsoc_pass);
             break;
+        case PIMG_GITSAOI:
+            canvas_draw_icon(canvas, 11, 2, &I_GITS_Aoi);
+            break;
+        case PIMG_GITSARA:
+            canvas_draw_icon(canvas, 11, 2, &I_GITS_Aramaki);
+            break;
+        case PIMG_GITSBAT:
+            canvas_draw_icon(canvas, 11, 2, &I_GITS_Batou);
+            break;
+        case PIMG_GITSHID:
+            canvas_draw_icon(canvas, 11, 2, &I_GITS_Hideo_Kuze);
+            break;
+        case PIMG_GITSISH:
+            canvas_draw_icon(canvas, 11, 2, &I_GITS_Ishikawa);
+            break;
+        case PIMG_GITSKUS:
+            canvas_draw_icon(canvas, 11, 2, &I_GITS_Kusanagi);
+            break;
+        case PIMG_GITSPRO:
+            canvas_draw_icon(canvas, 11, 2, &I_GITS_Project_2501);
+            break;
+        case PIMG_GITSSAI:
+            canvas_draw_icon(canvas, 11, 2, &I_GITS_Saito);
+            break;
+        case PIMG_GITSTOG:
+            canvas_draw_icon(canvas, 11, 2, &I_GITS_Togusa);
+            break;
         case PIMG_GOKUSET:
             canvas_draw_icon(canvas, 11, 2, portrait[passport->tmpLvl]);
             break;
@@ -263,8 +305,14 @@ static void render_callback(Canvas* const canvas, void* ctx) {
         case PIMG_GUYFAWKES:
             canvas_draw_icon(canvas, 11, 2, &I_Guy_Fawkes_Mask);
             break;
+        case PIMG_HAUNTER:
+            canvas_draw_icon(canvas, 11, 2, &I_Haunter);
+            break;
         case PIMG_LAIN:
             canvas_draw_icon(canvas, 11, 2, &I_Lain);
+            break;
+        case PIMG_LEEROY:
+            canvas_draw_icon(canvas, 11, 2, &I_Leeroy_Jenkins);
             break;
         case PIMG_MARIO:
             canvas_draw_icon(canvas, 11, 2, &I_Pixel_Mario);
@@ -284,11 +332,38 @@ static void render_callback(Canvas* const canvas, void* ctx) {
         case PIMG_PIRATE:
             canvas_draw_icon(canvas, 11, 2, &I_pirate);
             break;
+        case PIMG_PKMNTR:
+            canvas_draw_icon(canvas, 11, 2, &I_PkmnTrainer);
+            break;
+        case PIMG_PSYDUCK:
+            canvas_draw_icon(canvas, 11, 2, &I_Psyduck);
+            break;
         case PIMG_RABBIT:
             canvas_draw_icon_animation(canvas, 11, 2, animations[AniRabbit]);
             break;
+        case PIMG_SCARMLA:
+            canvas_draw_icon(canvas, 11, 2, &I_SC_Armaroid_Lady);
+            break;
+        case PIMG_SCCOBRA:
+            canvas_draw_icon(canvas, 11, 2, &I_SC_Cobra);
+            break;
+        case PIMG_SCCRYBO:
+            canvas_draw_icon(canvas, 11, 2, &I_SC_Crystal_Bowie);
+            break;
+        case PIMG_SCDOMRO:
+            canvas_draw_icon(canvas, 11, 2, &I_SC_Dominique_Royal);
+            break;
+        case PIMG_SCSANDRA:
+            canvas_draw_icon(canvas, 11, 2, &I_SC_Sandra);
+            break;
+        case PIMG_SCTARBEIGE:
+            canvas_draw_icon(canvas, 11, 2, &I_SC_Tarbeige);
+            break;
         case PIMG_SHINKAI:
             canvas_draw_icon(canvas, 11, 2, &I_Shinkai);
+            break;
+        case PIMG_SKULL:
+            canvas_draw_icon(canvas, 11, 2, &I_Skull);
             break;
         case PIMG_SLIME:
             canvas_draw_icon_animation(canvas, 11, 2, animations[AniSlime]);
@@ -314,20 +389,8 @@ static void render_callback(Canvas* const canvas, void* ctx) {
         case PIMG_WAIFU3:
             canvas_draw_icon(canvas, 11, 2, &I_Waifu3);
             break;
-        case PIMG_ADPOLICE:
-            canvas_draw_icon(canvas, 11, 2, &I_AD_Police);
-            break;
-        case PIMG_SKULL:
-            canvas_draw_icon(canvas, 11, 2, &I_Skull);
-            break;
-        case PIMG_DEDSEC:
-            canvas_draw_icon(canvas, 11, 2, &I_Dedsec_Mask);
-            break;
         case PIMG_WRENCH:
             canvas_draw_icon(canvas, 11, 2, portrait_wrench[passport->tmpMood]);
-            break;
-        case PIMG_LEEROY:
-            canvas_draw_icon(canvas, 11, 2, &I_Leeroy_Jenkins);
             break;
         }
 
@@ -737,7 +800,8 @@ static void render_callback(Canvas* const canvas, void* ctx) {
     furi_mutex_release(passport->mutex);
 }
 
-static void input_callback(InputEvent* input_event, FuriMessageQueue* event_queue) {
+static void input_callback(InputEvent* input_event, void* ctx) {
+    FuriMessageQueue* event_queue = ctx;
     furi_assert(event_queue);
     PassportEvent event = {.type = EventKeyPress, .input = *input_event};
     furi_message_queue_put(event_queue, &event, FuriWaitForever);

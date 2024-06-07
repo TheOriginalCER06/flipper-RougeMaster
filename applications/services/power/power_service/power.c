@@ -119,7 +119,7 @@ void power_draw_battery_callback(Canvas* canvas, void* context) {
         }
 
         // TODO: Verify if it displays correctly with custom battery skins !!!
-        if(power->info.voltage_battery_charge_limit < 4.2) {
+        if(power->info.voltage_battery_charge_limit < 4.2f) {
             // Battery charging voltage is modified, indicate with cross pattern
             canvas_invert_color(canvas);
             uint8_t battery_bar_width = (power->info.charge + 4) / 5;
@@ -350,8 +350,7 @@ Power* power_alloc(void) {
         power->view_dispatcher,
         PowerViewUnplugUsb,
         power_unplug_usb_get_view(power->power_unplug_usb));
-    view_dispatcher_attach_to_gui(
-        power->view_dispatcher, power->gui, ViewDispatcherTypeFullscreen);
+    view_dispatcher_attach_to_gui(power->view_dispatcher, power->gui, ViewDispatcherTypeDesktop);
 
     // Battery view port
     power->battery_view_port = power_battery_view_port_alloc(power);

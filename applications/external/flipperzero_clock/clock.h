@@ -6,8 +6,8 @@
 #define FACE_TYPES 4
 typedef enum {
     Rectangular = 0,
-    Round,
     DigitalRectangular,
+    Round,
     DigitalRound,
 } FaceType;
 
@@ -28,14 +28,14 @@ typedef struct {
     Point hours[12];
 } ClockFace;
 
-#define CONFIG_VERSION 1
+#define CONFIG_VERSION 2
 typedef struct {
     uint8_t version;
     bool split;
     uint8_t width;
     uint8_t digits_mod;
     FaceType face_type;
-    Point ofs;
+    uint8_t ofs_x;
     ClockFace face;
 } ClockConfig;
 

@@ -2,7 +2,7 @@
 #include "../views/subghz_read_raw.h"
 #include <dolphin/dolphin.h>
 #include <lib/subghz/protocols/raw.h>
-#include <lib/toolbox/path.h>
+#include <toolbox/path.h>
 #include <float_tools.h>
 
 #define RAW_FILE_NAME "R_"
@@ -104,14 +104,13 @@ void subghz_scene_read_raw_on_enter(void* context) {
 
     if(subghz_rx_key_state_get(subghz) != SubGhzRxKeyStateBack) {
         subghz_rx_key_state_set(subghz, SubGhzRxKeyStateIDLE);
-#if SUBGHZ_LAST_SETTING_SAVE_PRESET
+
         if(furi_string_empty(file_name)) {
             subghz_txrx_set_preset_internal(
                 subghz->txrx,
                 subghz->last_settings->frequency,
                 subghz->last_settings->preset_index);
         }
-#endif
     }
     subghz_scene_read_raw_update_statusbar(subghz);
 

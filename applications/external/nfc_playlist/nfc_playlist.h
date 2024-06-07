@@ -35,14 +35,16 @@ typedef enum {
     NfcPlaylistView_VariableItemList,
     NfcPlaylistView_FileBrowser,
     NfcPlaylistView_TextInput
-} NfcPlaylistView;
+} NfcPlaylistViews;
 
 typedef struct {
-    FuriString* file_path;
+    FuriString* playlist_path;
+    uint8_t playlist_length;
     bool playlist_selected;
     uint8_t emulate_timeout;
     uint8_t emulate_delay;
     bool emulate_led_indicator;
+    bool skip_error;
 } NfcPlaylistSettings;
 
 typedef struct {
@@ -67,10 +69,11 @@ static const int default_emulate_timeout = 4;
 static const int options_emulate_delay[] = {0, 1, 2, 3, 4, 5, 6};
 static const int default_emulate_delay = 0;
 static const bool default_emulate_led_indicator = true;
+static const bool default_skip_error = false;
 
 #define PLAYLIST_LOCATION "/ext/apps_data/nfc_playlist/"
 #define PLAYLIST_DIR "/ext/apps_data/nfc_playlist"
-#define PLAYLIST_VIEW_MAX_SIZE 1000
+#define PLAYLIST_NAME_LEN 100
 
 typedef enum NfcPlaylistLedState {
     NfcPlaylistLedState_Normal,

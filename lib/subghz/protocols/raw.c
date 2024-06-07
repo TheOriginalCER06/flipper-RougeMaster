@@ -3,10 +3,7 @@
 #include "../subghz_file_encoder_worker.h"
 
 #include "../blocks/const.h"
-#include "../blocks/decoder.h"
-#include "../blocks/encoder.h"
 #include "../blocks/generic.h"
-#include "../blocks/math.h"
 
 #include <flipper_format/flipper_format_i.h>
 #include <lib/toolbox/stream/stream.h>
@@ -62,6 +59,7 @@ const SubGhzProtocolDecoder subghz_protocol_raw_decoder = {
     .serialize = NULL,
     .deserialize = subghz_protocol_decoder_raw_deserialize,
     .get_string = subghz_protocol_decoder_raw_get_string,
+    .get_string_brief = NULL,
 };
 
 const SubGhzProtocolEncoder subghz_protocol_raw_encoder = {

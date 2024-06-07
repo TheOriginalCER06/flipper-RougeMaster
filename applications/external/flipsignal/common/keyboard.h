@@ -11,6 +11,12 @@
 
 typedef struct FlipboardKeyboard FlipboardKeyboard;
 
+typedef enum FlipboardKeyboardInterface {
+    FlipboardKeyboardInterfaceUnknown,
+    FlipboardKeyboardInterfaceUsb,
+    FlipboardKeyboardInterfaceBle,
+} FlipboardKeyboardInterface;
+
 /**
  * @brief Allocates a new flipboard keyboard.
  * @details Allocates a new flipboard keyboard. The keyboard is
@@ -31,7 +37,8 @@ void flipboard_keyboard_free(FlipboardKeyboard* keyboard);
  * @brief Attaches the keyboard to the USB port.
  * @details Attaches the keyboard to the USB port. This will
  * replace the current USB configuration. You should call
- * flipboard_keyboard_detatch to detach the keyboard.
+ * flipboard_keyboard_detatch to detach the keyboard.  If a USB
+ * keyboard is not attached, it will attempt to attach using BLE.
  * @param keyboard The keyboard to attach.
  */
 void flipboard_keyboard_attach(FlipboardKeyboard* keyboard);
@@ -101,3 +108,10 @@ void flipboard_keyboard_send_keycodes(
     FlipboardKeyboard* keyboard,
     uint16_t* codes,
     size_t nb_codes);
+
+/**
+ * @brief Gets the interface the keyboard is using.
+ * @param keyboard The keyboard to send the key codes with.
+ * @return The interface the keyboard is using.
+ */
+FlipboardKeyboardInterface flipboard_keyboard_get_inteface(FlipboardKeyboard* keyboard);

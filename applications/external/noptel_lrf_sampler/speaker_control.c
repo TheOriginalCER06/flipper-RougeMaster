@@ -1,6 +1,6 @@
 /***
  * Noptel LRF rangefinder sampler for the Flipper Zero
- * Version: 1.5
+ * Version: 1.9
  *
  * Speaker control
 ***/
@@ -8,7 +8,7 @@
 /*** Includes ***/
 #include <furi_hal.h>
 
-#include "noptel_lrf_sampler.h"
+#include "common.h"
 
 /*** Routines ***/
 

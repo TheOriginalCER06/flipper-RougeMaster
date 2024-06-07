@@ -37,7 +37,7 @@ static void flipboard_view_flip_signal_draw(Canvas* canvas, void* model) {
 
     canvas_set_bitmap_mode(canvas, 1);
     canvas_set_font(canvas, FontPrimary);
-    canvas_draw_str(canvas, 21, 12, "PRESS BUTTONS");
+    canvas_draw_str(canvas, 6, 12, "FlipSignal (IR/SUBGHZ)");
     canvas_draw_icon(canvas, 5, 19, icon1);
     canvas_draw_icon(canvas, 36, 19, icon2);
     canvas_draw_icon(canvas, 67, 19, icon3);
@@ -253,8 +253,36 @@ static bool custom_event_handler(void* context, uint32_t event) {
     return true;
 }
 
+static void flipboard_defaults(FlipboardModel* model) {
+    ActionModel* action_model;
+    action_model = action_model_alloc(1);
+    action_model_set_color_up(action_model, LedColorBlue);
+    action_model_set_color_down(action_model, LedColorCyan);
+    action_model_set_frequency(action_model, 164.814);
+    flipboard_model_set_action_model(
+        model, action_model_get_action_id(action_model), action_model);
+    action_model = action_model_alloc(2);
+    action_model_set_color_up(action_model, LedColorRed);
+    action_model_set_color_down(action_model, LedColorMagenta);
+    action_model_set_frequency(action_model, 220);
+    flipboard_model_set_action_model(
+        model, action_model_get_action_id(action_model), action_model);
+    action_model = action_model_alloc(4);
+    action_model_set_color_up(action_model, LedColorGreen);
+    action_model_set_color_down(action_model, LedColorViolet);
+    action_model_set_frequency(action_model, 277.183);
+    flipboard_model_set_action_model(
+        model, action_model_get_action_id(action_model), action_model);
+    action_model = action_model_alloc(8);
+    action_model_set_color_up(action_model, LedColorOrange);
+    action_model_set_color_down(action_model, LedColorYellow);
+    action_model_set_frequency(action_model, 329.628);
+    flipboard_model_set_action_model(
+        model, action_model_get_action_id(action_model), action_model);
+}
+
 /**
- * @brief This method is invoked when the FlipboardKeyboard app is launched.
+ * @brief This method is invoked when the FlipboardSignal app is launched.
  * @param p Unused.
  * @return 0.
  */
@@ -264,15 +292,14 @@ int32_t flipboard_signal_app(void* p) {
     ActionModelFields fields = ActionModelFieldColorDown | ActionModelFieldColorUp |
                                ActionModelFieldFrequency;
     bool single_mode_button = false;
-    bool attach_keyboard = false;
 
     Flipboard* app = flipboard_alloc(
         FLIPBOARD_APP_NAME,
         &I_qr_github,
         ABOUT_TEXT,
         fields,
+        flipboard_defaults,
         single_mode_button,
-        attach_keyboard,
         NULL,
         NULL,
         0,

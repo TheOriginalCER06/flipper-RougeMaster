@@ -1,3 +1,28 @@
+## Version 1.9 - 29/05/2024
+
+- Correctly display the bytes at the left-hand side of the serial traffic screen in the passthrough view
+- Free the UART receive stream buffer in the main thread rather than in the receive thread
+- Added code to turn on the +5V pin as well as the PC1 pin when the app is running - currently compiled out
+- Minor corrections
+
+## Version 1.8 - 08/05/2024
+
+- Added serial traffic monitor in the USB serial passthrough view
+- Added USB serial passthrough channel setting
+- Added utility to decode LRF serial traffic logged in the Flipper Zero CLI in real time
+
+## Version 1.7 - 04/05/2024
+
+- Added USB serial passthrough function
+
+## Version 1.6 - 29/04/2024
+
+- Added baudrate setting
+- Faster automatic SMM sampling rate
+- Display the supply voltage and receiver temperature in the LRF info view
+- Keep the backlight on when testing the LRX laser or the IR pointer
+- Undocumented feature can be enabled with a special configuration file (manufacturer only)
+
 ## Version 1.5 - 24/04/2024
 
 - Added LRX laser tester

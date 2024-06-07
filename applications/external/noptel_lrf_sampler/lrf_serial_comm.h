@@ -1,6 +1,6 @@
 /***
  * Noptel LRF rangefinder sampler for the Flipper Zero
- * Version: 1.5
+ * Version: 1.9
  *
  * LRF Serial communication app
 ***/
@@ -8,8 +8,7 @@
 #pragma once
 
 /*** Defines ***/
-#define BAUDRATE 115200
-#define RX_BUF_SIZE 2048
+#define UART_RX_BUF_SIZE 256
 #define DIAG_PROGRESS_UPDATE_EVERY 250 /*ms*/
 
 /*** Types ***/
@@ -47,11 +46,14 @@ typedef enum {
     /* Turn the pointer off */
     pointer_off = 9,
 
-    /* Send identification information */
+    /* Send identification frame */
     send_ident = 10,
 
+    /* Send information frame */
+    send_info = 11,
+
     /* Read diagnostic data */
-    read_diag = 11,
+    read_diag = 12,
 
 } LRFCommand;
 
@@ -100,6 +102,61 @@ typedef struct {
 
 } LRFIdent;
 
+/** LRF information **/
+typedef struct {
+    /* Transmission retries */
+    uint8_t txretries;
+
+    /* Laser pump time */
+    uint16_t txpumptime;
+
+    /* Number of pulses used for the last measurement */
+    uint16_t pulsesused;
+
+    /* Transmitter temperature */
+    uint8_t txtemp;
+
+    /* APD at first burst */
+    uint8_t apdatfirstburst;
+
+    /* Target distances */
+    uint16_t targetdist1;
+    uint16_t targetdist2;
+    uint16_t targetdist3;
+
+    /* Target magnitudes */
+    uint8_t targetmagnitude1;
+    uint8_t targetmagnitude2;
+    uint8_t targetmagnitude3;
+
+    /* Battery voltage */
+    float battvoltage;
+
+    /* I/O voltage */
+    float iovoltage;
+
+    /* Receiver voltage */
+    float rxvoltage;
+
+    /* Transmitter voltage */
+    float txvoltage;
+
+    /* Receiver temperature */
+    float rxtemp;
+
+    /* Status bytes */
+    uint8_t statusbyte1;
+    uint8_t statusbyte2;
+    uint8_t statusbyte3;
+
+    /* Pulse counter */
+    uint64_t pulsectr;
+
+    /* Serial error counter */
+    uint8_t rserrorctr;
+
+} LRFInfo;
+
 /** LRF diagnostic data **/
 typedef struct {
     /* Diagnostic data values */
@@ -119,11 +176,17 @@ typedef struct _LRFSerialCommApp LRFSerialCommApp;
 
 /*** Routines ***/
 
+/** Set the callback to handle raw data received from the LRF **/
+void set_lrf_raw_data_handler(LRFSerialCommApp*, void (*)(uint8_t*, uint16_t, void*), void*);
+
 /** Set the callback to handle one received LRF sample **/
 void set_lrf_sample_handler(LRFSerialCommApp*, void (*)(LRFSample*, void*), void*);
 
 /** Set the callback to handle one received LRF identification frame **/
 void set_lrf_ident_handler(LRFSerialCommApp*, void (*)(LRFIdent*, void*), void*);
+
+/** Set the callback to handle one received LRF information frame **/
+void set_lrf_info_handler(LRFSerialCommApp*, void (*)(LRFInfo*, void*), void*);
 
 /** Set the callback to handle received diagnostic data **/
 void set_diag_data_handler(LRFSerialCommApp*, void (*)(LRFDiag*, void*), void*);
@@ -132,11 +195,23 @@ void set_diag_data_handler(LRFSerialCommApp*, void (*)(LRFDiag*, void*), void*);
     buffer **/
 void enable_shared_storage_dec_buf(LRFSerialCommApp*, bool);
 
+/** UART send function **/
+void uart_tx(LRFSerialCommApp*, uint8_t*, uint16_t);
+
 /** Send a command to the LRF **/
 void send_lrf_command(LRFSerialCommApp*, LRFCommand);
 
 /** Initialize the LRF serial communication app **/
 LRFSerialCommApp* lrf_serial_comm_app_init(uint16_t, uint16_t, uint8_t*, uint16_t);
+
+/** Start the UART **/
+void start_uart(LRFSerialCommApp*, uint32_t);
+
+/** Stop the UART **/
+void stop_uart(LRFSerialCommApp*);
+
+/** Set the UART's baudrate **/
+void set_uart_baudrate(LRFSerialCommApp*, uint32_t);
 
 /** Stop the UART receive thread and free up the space allocated for the LRF
     communication app **/
