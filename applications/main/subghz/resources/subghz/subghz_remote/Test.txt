@@ -1,0 +1,4 @@
+Filetype: Flipper SubRem Map file
+Version: 1
+OK: /ext/subghz/Test.sub
+OKLABEL: Aapne_Lukk

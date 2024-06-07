@@ -1,0 +1,4 @@
+Filetype: Flipper Nested Nonce Manifest File
+Version: 3
+Note: you will need desktop app to recover keys: https://github.com/AloneLiberty/FlipperNestedRecovery
+HardNested: Key A cuid 0x81113c55 file /ext/nfc/.nested/81113C55/0_0.nonces sec 0
